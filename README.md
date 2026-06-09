@@ -25,7 +25,23 @@ In this first module, I developed a script in **R** to connect directly with the
 * Generate statistical visualization (bar charts) using `ggplot2` to display the distribution of the most frequently reported Adverse Drug Reactions (ADRs).
 * Calculate Disproportionality Scores (Proportional Reporting Ratio - PRR) for safety signal detection.
 
-### 📈 Visual Insights:
+###  Visual Insights:
 Below is the chart generated directly from the script, showcasing the distribution of the top 15 reported adverse events:
 
 ![Top 15 Ibuprofen ADRs](top15_ibuprofen_adr.png)
+
+---
+
+## Project 1 (Part 2): Safety Signal Detection & Disproportionality Analysis (PRR)
+
+In this extension, I implemented a data mining algorithm used by regulatory agencies (such as ANVISA, FDA, and EMA) to calculate the **Proportional Reporting Ratio (PRR)**. 
+
+### Methodological Approach:
+* **Target Drug:** Ibuprofen
+* **Active Control Group:** Acetaminophen (Paracetamol)
+* **Adverse Event Target:** *Acute Kidney Injury* (MedDRA Preferred Term)
+
+### Practical Outcome & Regulatory Discussion:
+The script automatically queried the whole database to build a $2\times2$ contingency table, outputting a **PRR Score of 1.54**. 
+
+According to global guidelines, a safety signal is triggered when $\text{PRR} \ge 2$ and $\text{cases} \ge 3$. Even though Ibuprofen showed a **54% higher proportion** of renal reports compared to Acetaminophen, it did not cross the statistical threshold to generate a new safety alert. This demonstrates how active controls are vital to avoid false-positive signals in post-marketing surveillance.
