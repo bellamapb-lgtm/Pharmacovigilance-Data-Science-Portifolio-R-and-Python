@@ -24,3 +24,8 @@ In this first module, I developed a script in **R** to connect directly with the
 * Implement data filtering to remove generic MedDRA terms (e.g., "Drug Ineffective").
 * Generate statistical visualization (bar charts) using `ggplot2` to display the distribution of the most frequently reported Adverse Drug Reactions (ADRs).
 * Calculate Disproportionality Scores (Proportional Reporting Ratio - PRR) for safety signal detection.
+
+### 📈 Visual Insights:
+Below is the chart generated directly from the script, showcasing the distribution of the top 15 reported adverse events:
+
+![Top 15 Ibuprofen ADRs](top15_ibuprofen_adr.png)
