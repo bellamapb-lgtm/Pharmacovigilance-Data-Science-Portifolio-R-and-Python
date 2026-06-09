@@ -45,3 +45,20 @@ In this extension, I implemented a data mining algorithm used by regulatory agen
 The script automatically queried the whole database to build a $2\times2$ contingency table, outputting a **PRR Score of 1.54**. 
 
 According to global guidelines, a safety signal is triggered when $\text{PRR} \ge 2$ and $\text{cases} \ge 3$. Even though Ibuprofen showed a **54% higher proportion** of renal reports compared to Acetaminophen, it did not cross the statistical threshold to generate a new safety alert. This demonstrates how active controls are vital to avoid false-positive signals in post-marketing surveillance.
+
+
+---
+
+## Project 2: Automated Drug Safety Alert System (Python)
+
+In this second project, I shifted the tech stack to **Python** to demonstrate versatility in handling regulatory data streams. 
+
+### Project Objectives:
+1. Connect to the openFDA endpoint using Python's `requests` library.
+2. Query safety data specifically filtered for **Serious Adverse Events** (cases involving hospitalization, life-threatening situations, or death) for **Metformin**.
+3. Use **Pandas** to structure the JSON response, calculate the percentage share of each serious reaction, and generate an automated text-based safety report.
+
+### Tech Stack:
+* **Python 3**
+* **Requests**: For API interactions.
+* **Pandas**: For high-performance data manipulation and tabular analysis.
