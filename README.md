@@ -63,8 +63,6 @@ In this second project, I shifted the tech stack to **Python** to demonstrate ve
 * **Requests**: For API interactions.
 * **Pandas**: For high-performance data manipulation and tabular analysis.
 
-* ---
-
 ---
 
 ## Project 03: Time-to-Onset Analysis (Kaplan-Meier)
