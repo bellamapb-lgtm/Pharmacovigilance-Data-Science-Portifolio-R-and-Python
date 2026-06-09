@@ -1,19 +1,17 @@
 # ==============================================================================
 # PROJECT 2: AUTOMATED DRUG SAFETY ALERT SYSTEM (PYTHON)
 # ==============================================================================
-# Objective: Extract and analyze serious adverse events (hospitalization/death)
-# for a specific drug using Python and Pandas.
+# Objective: Extract and analyze adverse events for Metformin using Python and Pandas.
 
 import requests
 import pandas as pd
 
 print("--- Starting openFDA Data Extraction (Python) ---")
 
-# Step 1: Define API Endpoint and parameters for a new target drug: METFORMIN
-# We are filtering specifically for serious cases (seriousness = 1)
+# Step 1: Define API Endpoint and parameters for METFORMIN
 url = "https://api.fda.gov/drug/event.json"
 params = {
-    "search": "patient.drug.medicinalproduct:METFORMIN AND seriousness:1",
+    "search": "patient.drug.medicinalproduct:METFORMIN",
     "count": "patient.reaction.reactionmeddrapt.exact",
     "limit": 10
 }
@@ -30,18 +28,17 @@ if response.status_code == 200:
     df_alerts = pd.DataFrame(results)
     
     # Renaming columns for clarity
-    df_alerts.columns = ['MedDRA_Term', 'Serious_Case_Count']
+    df_alerts.columns = ['MedDRA_Term', 'Case_Count']
     
     # Step 4: Data Transformation - Calculate percentage of impact
-    total_serious = df_alerts['Serious_Case_Count'].sum()
-    df_alerts['Percentage_Share'] = (df_alerts['Serious_Case_Count'] / total_serious) * 100
+    total_cases = df_alerts['Case_Count'].sum()
+    df_alerts['Percentage_Share'] = (df_alerts['Case_Count'] / total_cases) * 100
     
     # Step 5: Print the Automated Alert Report
-    print("\n⚠️ [ALERT REPORT] TOP 10 SERIOUS ADVERSE EVENTS FOR METFORMIN ⚠️")
+    print("\n⚠️ [ALERT REPORT] TOP 10 ADVERSE EVENTS FOR METFORMIN ⚠️")
     print("================================================================")
     print(df_alerts.to_string(index=False))
     print("================================================================")
     
 else:
     print(f"Failed to connect to openFDA API. Status Code: {response.status_code}")
-  
