@@ -14,7 +14,7 @@ Automated ingestion of raw safety reports from the openFDA endpoint (`drug/event
 ###  Adverse Event Profiling
 Distribution of the top 15 reported clinical outcomes processed during the extraction phase:
 
-![](top_15_advers_events.png)
+![](top_15_advers_events.jpeg)
 
 ###  Methodological Discussion & Signal Evaluation
 * **Active Control Benchmarking:** Evaluated **Ibuprofen** against an active control (**Acetaminophen**) specifically filtering for **Acute Kidney Injury** (MedDRA Preferred Term).
