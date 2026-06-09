@@ -1,101 +1,71 @@
-# Pharmacovigilance-Data-Science-Portifolio-R-and-Python
-Data science projects applied to Pharmacovigilance, Drug Safety, and Regulatory Affairs using R and Python. Features real-time data extraction from the openFDA API
-# Pharmacovigilance Data Science Portfolio: R & Python
+# Quantitative Safety & Pharmacovigilance Data Pipeline (R & Python)
 
-This repository features practical data science projects demonstrating the application of programming languages in Drug Safety, Regulatory Affairs, and Patient Safety. The primary focus is turning raw health data into actionable regulatory insights.
+This repository contains operational data science workflows developed to automate and optimize Pharmacovigilance (PV) processes. The core focus is translating raw, unstructured post-marketing surveillance data into validated safety insights, strictly aligned with European Medicines Agency (EMA) Good Pharmacovigilance Practices (GVP) and ICH guidelines.
 
 ---
 
-## Project 1: Automated Adverse Event Data Extraction (openFDA API)
+##  Project 1: Signal Detection & Disproportionality Testing (PRR Engine)
+**Tech Stack:** R (`httr`, `jsonlite`, `tidyverse`)  
+**Regulatory Framework:** EMA GVP Module IX & FDA Guidance for Industry.
 
-In this first module, I developed a script in **R** to connect directly with the U.S. Food and Drug Administration's official public API (**openFDA**). 
+###  Executive Summary
+Automated ingestion of raw safety reports from the openFDA endpoint (`drug/event.json`) to establish a standardized data cleaning pipeline. Built a quantitative data mining tool utilizing the Proportional Reporting Ratio (PRR) algorithm to flag potential safety signals.
 
-### Project Objectives:
-1. Establish a secure HTTP connection with the adverse event endpoint (`drug/event.json`).
-2. Query and extract real-time post-marketing surveillance data (JSON format) for a specific drug (**Ibuprofen**).
-3. Perform data cleaning and transformation, converting nested JSON structures into a structured, tidy data frame.
+###  Adverse Event Profiling
+Distribution of the top 15 reported clinical outcomes processed during the extraction phase:
 
-### Tech Stack & Libraries:
-* **httr**: For handling HTTP requests and API communication.
-* **jsonlite**: For parsing, flattening, and converting JSON data into R data frames.
-* **tidyverse**: For efficient data manipulation and syntax styling.
+![](top_15_advers_events.png)
 
-### Next Steps in Development:
-* Implement data filtering to remove generic MedDRA terms (e.g., "Drug Ineffective").
-* Generate statistical visualization (bar charts) using `ggplot2` to display the distribution of the most frequently reported Adverse Drug Reactions (ADRs).
-* Calculate Disproportionality Scores (Proportional Reporting Ratio - PRR) for safety signal detection.
-
-###  Visual Insights:
-Below is the chart generated directly from the script, showcasing the distribution of the top 15 reported adverse events:
-
-![Top 15 Ibuprofen ADRs](top15_ibuprofen_adr.png)
+###  Methodological Discussion & Signal Evaluation
+* **Active Control Benchmarking:** Evaluated **Ibuprofen** against an active control (**Acetaminophen**) specifically filtering for **Acute Kidney Injury** (MedDRA Preferred Term).
+* **Statistical Validation:** The pipeline automatically structured a 2x2 contingency table. The analysis yielded a **PRR Score of 1.54**. 
+* **Regulatory Decision-Making:** Per international criteria, a safety signal requires a $PRR \ge 2$ and $\ge 3$ cases. Although Ibuprofen showed a 54% higher proportion of renal reports relative to the control, it did not cross the threshold for a valid signal. Implementing active controls in this pipeline successfully prevented a false-positive escalation, showcasing the necessity of data-driven signal triaging.
 
 ---
 
-## Project 1 (Part 2): Safety Signal Detection & Disproportionality Analysis (PRR)
+##  Project 2: Production-Ready Serious Adverse Event Alerting (Python)
+**Tech Stack:** Python 3 (`requests`, `pandas`)  
+**Regulatory Framework:** Real-Time Safety Screening & Case Ingestion Triage.
 
-In this extension, I implemented a data mining algorithm used by regulatory agencies (such as ANVISA, FDA, and EMA) to calculate the **Proportional Reporting Ratio (PRR)**. 
+###  Executive Summary
+A backend Python script designed to monitor safety data streams for high-priority molecules. This script automates the continuous screening of safety databases to expedite the triage of high-risk case reports.
 
-### Methodological Approach:
-* **Target Drug:** Ibuprofen
-* **Active Control Group:** Acetaminophen (Paracetamol)
-* **Adverse Event Target:** *Acute Kidney Injury* (MedDRA Preferred Term)
-
-### Practical Outcome & Regulatory Discussion:
-The script automatically queried the whole database to build a $2\times2$ contingency table, outputting a **PRR Score of 1.54**. 
-
-According to global guidelines, a safety signal is triggered when $\text{PRR} \ge 2$ and $\text{cases} \ge 3$. Even though Ibuprofen showed a **54% higher proportion** of renal reports compared to Acetaminophen, it did not cross the statistical threshold to generate a new safety alert. This demonstrates how active controls are vital to avoid false-positive signals in post-marketing surveillance.
-
+###  Operational Impact
+* **Targeted Ingestion:** Queries and filters openFDA data in real time, specifically isolating **Serious Adverse Events (SAEs)** (defined by regulatory criteria: hospitalization, life-threatening outcomes, or death) for **Metformin**.
+* **Workflow Automation:** Utilizes Pandas to parse nested JSON payloads, compute the exact percentage contribution of each distinct MedDRA term, and output a structured, clean data summary. This script replaces manual query routines, significantly reducing the Time-to-Triage for safety analysts.
 
 ---
 
-## Project 2: Automated Drug Safety Alert System (Python)
+##  Project 3: Time-to-Onset Risk Profiling (Kaplan-Meier Survival Analysis)
+**Tech Stack:** R (`survival`, `survminer`)  
+**Regulatory Framework:** ICH E2A Guidelines & WHO-UMC Causality Assessment Criteria.
 
-In this second project, I shifted the tech stack to **Python** to demonstrate versatility in handling regulatory data streams. 
+###  Executive Summary
+Applied survival analysis methodologies to evaluate the temporal plausibility of an adverse drug reaction (ADR). This project models the exact timeline from initial drug exposure to the first documented onset of a suspected reaction, comparing risk profiles across demographics.
 
-### Project Objectives:
-1. Connect to the openFDA endpoint using Python's `requests` library.
-2. Query safety data specifically filtered for **Serious Adverse Events** (cases involving hospitalization, life-threatening situations, or death) for **Metformin**.
-3. Use **Pandas** to structure the JSON response, calculate the percentage share of each serious reaction, and generate an automated text-based safety report.
-
-### Tech Stack:
-* **Python 3**
-* **Requests**: For API interactions.
-* **Pandas**: For high-performance data manipulation and tabular analysis.
-
----
-
-## Project 03: Time-to-Onset Analysis (Kaplan-Meier)
-**Language used:** R (`survival` and `survminer` packages)  
-**Regulatory Alignment:** ICH E2A Guidelines & WHO-UMC Causality Assessment.
-
-### Project Objective
-Analysis of the time elapsed between drug initiation and the onset of a specific adverse event, evaluating biological plausibility and comparing risk dynamics between special populations (**Adults vs. Elderly**).
-
-### Survival Curve (Generated automatically by R):
-Below is the Kaplan-Meier plot generated by the statistical script, demonstrating the probability of a patient remaining event-free over the treatment period:
+###  Time-to-Onset Risk Curves
+Survival distribution showing the probability of a patient remaining free from the targeted ADR over the course of treatment:
 
 ![](projeto2_kaplan_meier.png)
 
-### Regulatory Perspective
-* **Log-Rank Test:** The script automatically executes a hypothesis test to evaluate whether the difference in time-to-onset between the two cohorts is statistically significant.
-* **Risk Management:** Identifying the high-risk window (where the curve drops most sharply) allows the Pharmacovigilance team to propose targeted risk minimization measures in product labeling and Risk Management Plans (RMPs).
-
+###  Clinical & Regulatory Discussion
+* **Comparative Cohorts:** Analyzed risk progression between special populations (**Adults vs. Elderly**). The Log-Rank test indicated no statistically significant difference in onset times between the cohorts ($p = 0.3$).
+* **Risk Minimization:** Mapping the high-risk temporal window (where the curve drops) provides empirical data for the Risk Management Plan (RMP). This statistical evidence supports precise definitions for product labeling updates, specifically core safety profile revisions.
 
 ---
 
-## Project 04: Pregnancy Registry Analysis (Logistic Regression)
-**Language used:** R (`tidyverse` and `broom` packages)  
-**Regulatory Alignment:** EMA GVP Module P.III (Pregnant & Breastfeeding Women).
+##  Project 4: Teratovigilance & Confounder Control (Multivariate Logistic Regression)
+**Tech Stack:** R (`tidyverse`, `broom`)  
+**Regulatory Framework:** EMA GVP Module P.III (Special Populations: Pregnant & Breastfeeding Women).
 
-### Project Objective
-Evaluate the association between maternal drug exposure and congenital malformations using multivariate logistic regression to calculate **Adjusted Odds Ratios (aOR)**, controlling for maternal age and lifestyle factors.
+###  Executive Summary
+An epidemiological data workflow tailored for pregnancy registries. The project evaluates rare outcomes (congenital malformations) following gestational drug exposure, utilizing multivariate logistic regression to isolate the true drug effect from confounding maternal factors.
 
-### Adjusted Odds Ratio (Forest Plot):
-Below is the Forest Plot generated by the biostatistical engine, demonstrating the risk magnitude for each evaluated variable:
+###  Adjusted Odds Ratio Profile (Forest Plot)
+Visual representation of adjusted risk metrics used to support benefit-risk balance determinations:
 
 ![](forest_plot.png)
 
-### Methodological Discussion
-* **Confounder Adjustment:** The model adjusts for maternal age and smoking status, ensuring that the safety signal is specifically linked to the medicinal product and not external variables.
-* **Risk Quantification:** By providing Odds Ratios with 95% Confidence Intervals, the analysis supports informed benefit-risk decisions for product labeling updates and Risk Management Plans (RMPs).
+###  Methodological Discussion
+* **Confounder Mitigation:** The model controls for maternal age and smoking status. Adjusting for these variables prevents the skewing of safety data, ensuring that the calculated signal is genuinely linked to drug exposure rather than lifestyle baselines.
+* **Quantifiable Risk:** By outputting **Adjusted Odds Ratios (aOR)** alongside 95% Confidence Intervals, this script provides the statistical rigor required by European regulatory authorities when updating safety registries or deciding on post-authorization safety studies (PASS).
