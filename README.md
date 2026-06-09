@@ -69,3 +69,22 @@ Visual representation of adjusted risk metrics used to support benefit-risk bala
 ###  Methodological Discussion
 * **Confounder Mitigation:** The model controls for maternal age and smoking status. Adjusting for these variables prevents the skewing of safety data, ensuring that the calculated signal is genuinely linked to drug exposure rather than lifestyle baselines.
 * **Quantifiable Risk:** By outputting **Adjusted Odds Ratios (aOR)** alongside 95% Confidence Intervals, this script provides the statistical rigor required by European regulatory authorities when updating safety registries or deciding on post-authorization safety studies (PASS).
+
+---
+
+## Project 05: Interactive Pharmacovigilance Operational Dashboard (R Shiny)
+**Tech Stack:** R (`shiny`, `shinydashboard`, `plotly`, `tidyverse`)  
+**Regulatory Framework:** Operational Compliance KPIs & EMA GVP Module I.
+
+### Executive Summary
+This project demonstrates the deployment of a production-ready web application designed for real-time safety metrics tracking and regulatory timeline screening. It provides executive stakeholders with dynamic data visualization capabilities without requiring code interactions.
+
+### Interactive Dashboard Interface
+Below is a preview of the operational application interface running the safety analysis engine:
+
+![](shiny_dashboard_preview.png)
+
+###  Methodological Discussion & Operational Impact
+* **Reactive Regulatory Monitoring:** Built an automated ingestion layout featuring interactive filtering for core molecules. Changes in drug criteria dynamically recalculate key metrics including total case burden and MedDRA term frequencies.
+* **Inspectable Compliance Tracking:** Monitors the strict 15-day regulatory window for Serious Adverse Events (SAEs). The interface triggers an automated visual warning system (color shifting) if the "On-time" submission threshold falls below the EMA target of 95%.
+* **Full-Stack Competency:** Deploying data architectures inside a Shiny environment showcases an advanced capability to bridge advanced biostatistics with professional end-user healthcare software.
